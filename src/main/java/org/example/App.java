@@ -18,7 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class App extends Application implements EventHandler<ActionEvent> {
     Stage window;
     Scene scene,scene1,scene2,scene3,sceneCar,sceneOrder;
-    Scene mainDelete;
+    Scene mainDelete,delete1,delete2,delete3,delete4;
+    Scene mainView,view1,view2,view3,view4;
 
     static Connect connect = null;
 
@@ -26,6 +27,57 @@ public class App extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage stage) {
         window = stage;
+
+        // wyswietlanie tabel
+        VBox view = new VBox(20);
+        view.setAlignment(Pos.CENTER);
+        Label labelek = new Label("Co chcesz wyswietlic?");
+        ChoiceBox<String> choiceBoxxx = new ChoiceBox<>();
+        choiceBoxxx.getItems().add("Klienta");
+        choiceBoxxx.getItems().add("Pracownika");
+        choiceBoxxx.getItems().add("Samochod");
+        choiceBoxxx.getItems().add("Zamowienie");
+        Button backButttt = new Button("Powrot");
+        backButttt.setOnAction(e->changeScene(window,scene));
+        view.getChildren().addAll(labelek,choiceBoxxx,backButttt);
+        choiceBoxxx.setOnAction(e->{
+            int selectedIndexxxxxx = choiceBoxxx.getSelectionModel().getSelectedIndex();
+            try {
+                switch (selectedIndexxxxxx) {
+                    case 0:
+                        changeScene(window, view1);
+                        break;
+                    case 1:
+                        changeScene(window, view2);
+                        break;
+                    case 2:
+                        changeScene(window,view3);
+                        break;
+                    case 3:
+                        changeScene(window,view4);
+                        break;
+                    default:
+                        AlertBox.display("Nieznana opcja","Nie dokonano wyboru");
+                }
+            } catch (Exception excc) { excc.printStackTrace(); }
+        });
+
+        mainView = new Scene(view,800,800);
+
+// wyswietlanie tabeli klient
+
+        VBox mainDeletee = new VBox(20);
+        mainDeletee.setAlignment(Pos.CENTER);
+
+        new TableController();
+
+        view1 = new Scene(mainDeletee,800, 800);
+
+
+
+
+
+
 
         VBox mainDelet = new VBox(20);
         mainDelet.setAlignment(Pos.CENTER);
@@ -40,22 +92,19 @@ public class App extends Application implements EventHandler<ActionEvent> {
         mainDelet.getChildren().addAll(text,choiceBoxx,backBut);
         choiceBoxx.setOnAction(e->{
             int selectedIndex = choiceBoxx.getSelectionModel().getSelectedIndex();
-            Object selectedItem = choiceBoxx.getSelectionModel().getSelectedItem();
-            System.out.println("zmiana dokonana: ["+selectedIndex+"]"+selectedItem);
-            System.out.println("choiceBox.getValue():"+choiceBoxx.getValue());
             try {
                 switch (selectedIndex) {
                     case 0:
-                        changeScene(window, scene2);
+                        changeScene(window, delete1);
                         break;
                     case 1:
-                        changeScene(window, scene3);
+                        changeScene(window, delete2);
                         break;
                     case 2:
-                        changeScene(window,sceneCar);
+                        changeScene(window,delete3);
                         break;
                     case 3:
-                        changeScene(window,sceneOrder);
+                        changeScene(window,delete4);
                         break;
                     default:
                         System.out.println("nie dokonano wyboru");
@@ -65,8 +114,94 @@ public class App extends Application implements EventHandler<ActionEvent> {
         mainDelete = new Scene(mainDelet,800, 800);
 
 
+//----------- usuwanie klientow
+
+        //delete1 - wybrana opcja usuwania klientow
+        VBox klient = new VBox(15);
+        klient.setAlignment(Pos.CENTER);
+
+        Label klienID = new Label("Numer identyfikacyjny klienta: ");
+        TextField klienID1 = new TextField();
+        klienID1.setMaxWidth(100);
 
 
+        Button del = new Button("Usun rekord");
+        Button backOp = new Button("Powrót");
+        backOp.setOnAction(e->changeScene(window,mainDelete));
+
+        del.setOnAction(e->{try {
+            connect.deleteClientData(klienID1.getText());
+            AlertBox.display("Usuwanie klienta","usunięto pomyślnie");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        klient.getChildren().addAll(klienID,klienID1,del,backOp);
+        delete1 = new Scene(klient,800,800);
+//-------------------------
+
+//----------- usuwanie pracownika
+
+        //delete2 - wybrana opcja usuwania pracownika
+        VBox prac = new VBox(15);
+        prac.setAlignment(Pos.CENTER);
+
+        Label pracID = new Label("Numer identyfikacyjny pracownika: ");
+        TextField pracID1 = new TextField();
+        pracID1.setMaxWidth(100);
+
+
+        Button dell = new Button("Usun rekord");
+        Button backOpp = new Button("Powrót");
+        backOpp.setOnAction(e->changeScene(window,mainDelete));
+
+        dell.setOnAction(e->{try {
+            connect.deleteWorkerData(pracID1.getText());
+            AlertBox.display("Usuwanie pracownika","usunięto pomyślnie");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        prac.getChildren().addAll(pracID,pracID1,dell,backOpp);
+        delete2 = new Scene(prac,800,800);
+
+//----------- usuwanie samochodu
+
+        //delete3 - wybrana opcja usuwania samochodu
+        VBox sam = new VBox(15);
+        sam.setAlignment(Pos.CENTER);
+        Label carID = new Label("Numer identyfikacyjny pracownika: ");
+        TextField carId1 = new TextField();
+        carId1.setMaxWidth(100);
+        Button delll = new Button("Usun rekord");
+        Button backOppp = new Button("Powrót");
+        backOppp.setOnAction(e->changeScene(window,mainDelete));
+
+        delll.setOnAction(e->{try {
+            connect.deleteCarData(carId1.getText());
+            AlertBox.display("Usuwanie samochodu","usunięto pomyślnie");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        sam.getChildren().addAll(carID,carId1,delll,backOppp);
+        delete3 = new Scene(sam,800,800);
+//----------- usuwanie zamowienia
+        //delete4 - wybrana opcja usuwania zamowienia
+        VBox order = new VBox(15);
+        order.setAlignment(Pos.CENTER);
+        Label orderID = new Label("Numer identyfikacyjny zamowienia: ");
+        TextField orderID1 = new TextField();
+        orderID1.setMaxWidth(100);
+        Button dellll = new Button("Usun rekord");
+        Button backOpppp = new Button("Powrót");
+        backOpppp.setOnAction(e->changeScene(window,mainDelete));
+
+        dellll.setOnAction(e->{try {
+            connect.deleteOrderData(orderID1.getText());
+            AlertBox.display("Usuwanie zamowienia","usunięto pomyślnie");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        order.getChildren().addAll(orderID,orderID1,dellll,backOpppp);
+        delete4 = new Scene(order,800,800);
 
 
 
@@ -78,12 +213,14 @@ public class App extends Application implements EventHandler<ActionEvent> {
         //--------------------------------------------------------------------------------------------------------------------------------------------
         Button buttonAdd = new Button("Dodaj nowy rekord");
         Button buttonDelete = new Button("Usun rekordy");
+        Button buttonVieww = new Button("Wyswietl rekordy");
         buttonDelete.setOnAction(e-> changeScene(window,mainDelete));
         buttonAdd.setOnAction(e -> changeScene(window,scene1));
+        buttonVieww.setOnAction(e -> changeScene(window,mainView));
         //layout - gdzie sa ukladane elementy w pionowych kolumnach
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(buttonAdd,buttonDelete);
+        layout.getChildren().addAll(buttonAdd,buttonDelete,buttonVieww);
         scene = new Scene(layout,800, 800);
 
 
@@ -261,8 +398,8 @@ public class App extends Application implements EventHandler<ActionEvent> {
 
 
         //scena5 - wybrana opcja dodania zamowienia
-        VBox order = new VBox(15);
-        order.setAlignment(Pos.CENTER);
+        VBox order1 = new VBox(15);
+        order1.setAlignment(Pos.CENTER);
         Label clientID = new Label("Identyfikator klienta: ");
         TextField clientID1 = new TextField();
         clientID1.setMaxWidth(100);
@@ -271,9 +408,9 @@ public class App extends Application implements EventHandler<ActionEvent> {
         TextField workerID1 = new TextField();
         workerID1.setMaxWidth(100);
 
-        Label carID = new Label("Identyfikator samochodu: ");
-        TextField carID1 = new TextField();
-        carID1.setMaxWidth(100);
+        Label cr = new Label("Identyfikator samochodu: ");
+        TextField car1 = new TextField();
+        car1.setMaxWidth(100);
         AtomicInteger selectedIndexx = new AtomicInteger();
         Label paymentMethod = new Label("Identyfikator platnosci:");
         ComboBox paymentMethod1 = new ComboBox();
@@ -304,13 +441,13 @@ public class App extends Application implements EventHandler<ActionEvent> {
         Button backOpt = new Button("Powrot");
         backOpt.setOnAction(e->changeScene(window,scene1));
         adddd.setOnAction(e->{try {
-            connect.insertOrderData(clientID1.getText(),workerID1.getText(), carID1.getText(), (paymentMethod1.getSelectionModel().getSelectedIndex()+1),yearOrder1.getText(),monthOrder1.getText(),dayOrder1.getText(),priceOrder1.getText());
+            connect.insertOrderData(clientID1.getText(),workerID1.getText(), car1.getText(), (paymentMethod1.getSelectionModel().getSelectedIndex()+1),yearOrder1.getText(),monthOrder1.getText(),dayOrder1.getText(),priceOrder1.getText());
             AlertBox.display("Dodawanie nowego zamowienia","dodano pomyślnie");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } });
-        order.getChildren().addAll(clientID,clientID1,workerID,workerID1,carID,carID1,paymentMethod,paymentMethod1,yearOrder,yearOrder1,monthOrder,monthOrder1, dayOrder,dayOrder1,priceOrder,priceOrder1,adddd,backOpt);
-        sceneOrder = new Scene(order,800,800);
+        order1.getChildren().addAll(clientID,clientID1,workerID,workerID1,cr,car1,paymentMethod,paymentMethod1,yearOrder,yearOrder1,monthOrder,monthOrder1, dayOrder,dayOrder1,priceOrder,priceOrder1,adddd,backOpt);
+        sceneOrder = new Scene(order1,800,800);
 
 
 

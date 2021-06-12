@@ -18,7 +18,7 @@ public class AlertBox {
             window.setMinHeight(400);
             Label label = new Label();
             label.setText(message);
-            Button closeButton = new Button("Powrot");
+            Button closeButton = new Button("Powrót");
             closeButton.setOnAction(e-> window.close());
 
             VBox layout = new VBox(10);

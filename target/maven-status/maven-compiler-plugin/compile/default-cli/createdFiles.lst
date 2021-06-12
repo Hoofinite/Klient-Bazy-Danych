@@ -1,6 +1,8 @@
-org\example\AlertBox.class
-org\example\App.class
 org\example\Connect.class
 org\example\Statements.class
-org\example\SystemInfo.class
 module-info.class
+org\example\ModelTable.class
+org\example\AlertBox.class
+org\example\App.class
+org\example\TableController.class
+org\example\DBConnector.class

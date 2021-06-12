@@ -34,6 +34,8 @@ public class Connect {
         }
 
     }
+
+
     public void insertClientsData(String secondName,String name,String pesel,String miejscowo, String street,String houseNumber) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -76,7 +78,57 @@ public class Connect {
         }
 
     }
+    public void deleteClientData(String clientID) throws SQLException {
 
+        try {
+            Statement myStmt = conn.createStatement();
+            Statement myStmtt = conn.createStatement();
+            String query = "delete from zamowienie where klient_id="+clientID;
+            String queryy = "delete from klient where klient_id="+clientID;
+            myStmt.executeQuery(query);
+            myStmtt.executeQuery(queryy);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+    public void deleteWorkerData(String workerID) throws SQLException {
+
+        try {
+            Statement myStmt = conn.createStatement();
+            Statement myStmtt = conn.createStatement();
+            String query = "delete from zamowienie where pracownik_id="+workerID;
+            String queryy = "delete from pracownicy where pracownik_id="+workerID;
+            myStmt.executeQuery(query);
+            myStmtt.executeQuery(queryy);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+    public void deleteCarData(String carID) throws SQLException {
+        try {
+            Statement myStmt = conn.createStatement();
+            Statement myStmtt = conn.createStatement();
+            String query = "delete from zamowienie where samochod_id="+carID;
+            String queryy = "delete from samochod where samochod_id="+carID;
+            myStmt.executeQuery(query);
+            myStmtt.executeQuery(queryy);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+    public void deleteOrderData(String orderID) throws SQLException {
+        try {
+            Statement myStmt = conn.createStatement();
+            String query = "delete from zamowienie where zamowienie_id="+orderID;
+            myStmt.executeQuery(query);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
     //disconnect
     public void disconnect(){
 
