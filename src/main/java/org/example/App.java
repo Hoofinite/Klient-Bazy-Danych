@@ -18,22 +18,72 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class App extends Application implements EventHandler<ActionEvent> {
     Stage window;
     Scene scene,scene1,scene2,scene3,sceneCar,sceneOrder;
+    Scene mainDelete;
 
     static Connect connect = null;
 
 
     @Override
     public void start(Stage stage) {
-
         window = stage;
 
+        VBox mainDelet = new VBox(20);
+        mainDelet.setAlignment(Pos.CENTER);
+        Label text = new Label("Co chcesz usunac?");
+        ChoiceBox<String> choiceBoxx = new ChoiceBox<>();
+        choiceBoxx.getItems().add("Klienta");
+        choiceBoxx.getItems().add("Pracownika");
+        choiceBoxx.getItems().add("Samochod");
+        choiceBoxx.getItems().add("Zamowienie");
+        Button backBut = new Button("Powrot");
+        backBut.setOnAction(e->changeScene(window,scene));
+        mainDelet.getChildren().addAll(text,choiceBoxx,backBut);
+        choiceBoxx.setOnAction(e->{
+            int selectedIndex = choiceBoxx.getSelectionModel().getSelectedIndex();
+            Object selectedItem = choiceBoxx.getSelectionModel().getSelectedItem();
+            System.out.println("zmiana dokonana: ["+selectedIndex+"]"+selectedItem);
+            System.out.println("choiceBox.getValue():"+choiceBoxx.getValue());
+            try {
+                switch (selectedIndex) {
+                    case 0:
+                        changeScene(window, scene2);
+                        break;
+                    case 1:
+                        changeScene(window, scene3);
+                        break;
+                    case 2:
+                        changeScene(window,sceneCar);
+                        break;
+                    case 3:
+                        changeScene(window,sceneOrder);
+                        break;
+                    default:
+                        System.out.println("nie dokonano wyboru");
+                }
+            } catch (Exception exc) { exc.printStackTrace(); }
+        });
+        mainDelete = new Scene(mainDelet,800, 800);
 
+
+
+
+
+
+
+
+
+
+
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         Button buttonAdd = new Button("Dodaj nowy rekord");
+        Button buttonDelete = new Button("Usun rekordy");
+        buttonDelete.setOnAction(e-> changeScene(window,mainDelete));
         buttonAdd.setOnAction(e -> changeScene(window,scene1));
         //layout - gdzie sa ukladane elementy w pionowych kolumnach
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
-        layout.getChildren().add(buttonAdd);
+        layout.getChildren().addAll(buttonAdd,buttonDelete);
         scene = new Scene(layout,800, 800);
 
 
@@ -228,6 +278,7 @@ public class App extends Application implements EventHandler<ActionEvent> {
         Label paymentMethod = new Label("Identyfikator platnosci:");
         ComboBox paymentMethod1 = new ComboBox();
         paymentMethod1.getItems().addAll("karta","gotowka","przelew");
+
 
         paymentMethod1.setOnAction(e->{
             int selectedIndexxx = paymentMethod1.getSelectionModel().getSelectedIndex();
