@@ -75,8 +75,9 @@ public class App extends Application implements EventHandler<ActionEvent> {
         Button backButton = new Button("Powrót");
         backButton.setOnAction(e->changeScene(window,mainView));
         showButton.setOnAction(e->{try {
+            TableView tableview = new TableView();
             connect.selectClientTable(clientID2.getText());
-            AlertBox.display("Wyświetlanie danych klienta","Wyświetlono");
+            //AlertBox.display("Wyświetlanie danych klienta","Wyświetlono");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } });
@@ -97,8 +98,9 @@ public class App extends Application implements EventHandler<ActionEvent> {
         backButton.setOnAction(e->changeScene(window,mainView));
 
         showButt.setOnAction(e->{try {
+            TableView tableview = new TableView();
             connect.selectWorkerTable(workerID2.getText());
-            AlertBox.display("Wyświetlanie danych pracownika","Wyświetlono");
+            //AlertBox.display("Wyświetlanie danych pracownika","Wyświetlono");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } });
@@ -118,8 +120,9 @@ public class App extends Application implements EventHandler<ActionEvent> {
         backClick.setOnAction(e->changeScene(window,mainView));
 
         showClick.setOnAction(e->{try {
+            TableView tableview = new TableView();
             connect.selectCarTable(carID2.getText());
-            AlertBox.display("Wyświetlanie danych samochodu","Wyświetlono");
+            //AlertBox.display("Wyświetlanie danych samochodu","Wyświetlono");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } });
