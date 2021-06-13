@@ -301,11 +301,6 @@ public class Connect {
         }
     }*/
 
-    /**
-     * Sluzy do usuniecia danych z tabeli
-     * @param clientID id klienta
-     * @throws SQLException wyjatek
-     */
     public void selectOrderTable (String orderID) throws SQLException {
         ObservableList<ObservableList> data;
         data = FXCollections.observableArrayList();
@@ -345,6 +340,12 @@ public class Connect {
             e.printStackTrace();
         }
     }
+    /**
+     * Sluzy do usuniecia danych z tabeli
+     * @param clientID id klienta
+     * @throws SQLException wyjatek
+     */
+    
 
     /**
      * Sluzy do usuniecia danych z tabeli
