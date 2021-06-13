@@ -10,8 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
-
-
+//modeltable
 /**
  * JavaFX App
  */
@@ -75,8 +74,6 @@ public class App extends Application implements EventHandler<ActionEvent> {
         Button showButton = new Button("Wyświetl");
         Button backButton = new Button("Powrót");
         backButton.setOnAction(e->changeScene(window,mainView));
-
-        TableController table = new TableController();
         showButton.setOnAction(e->{try {
             connect.selectClientTable(clientID2.getText());
             AlertBox.display("Wyświetlanie danych klienta","Wyświetlono");
@@ -559,8 +556,12 @@ public class App extends Application implements EventHandler<ActionEvent> {
     }
 
     public static void main(String[] args) throws SQLException {
+        String jdbcURL = "jdbc:oracle:thin:@localhost:1521:ORCL";
+        String userid = "humba";
+        String password = "12345";
+
         connect = new Connect();
-        connect.getDBConnection();
+        connect.getDBConnection(jdbcURL,userid,password);
         launch();
         connect.disconnect();
 

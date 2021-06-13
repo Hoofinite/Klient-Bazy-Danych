@@ -3,36 +3,25 @@ package org.example;
 import oracle.jdbc.pool.OracleDataSource;
 import java.sql.*;
 
-
 public class Connect {
-    String jdbcURL = "jdbc:oracle:thin:@localhost:1521:ORCL";
-    String userid = "humba";
-    String password = "12345";
+
     Connection conn;
-
-
-
-
-
 
     public Connect() {
 
     }
 
     //connect
-    public boolean getDBConnection() throws SQLException{
+    public void getDBConnection(String jdbcURL,String userid,String password) throws SQLException{
         try{
             OracleDataSource ds;
 
         ds = new OracleDataSource();
         ds.setURL(jdbcURL);
         conn = ds.getConnection(userid,password);
-        if (conn == )
         System.out.println("polaczono z baza danych!!!!!!!!!!");
-        return true;
         }catch (SQLException throwables) {
             throwables.printStackTrace();
-            return false;
         }
 
     }
@@ -56,7 +45,6 @@ public class Connect {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
     }
 
     public void insertCarData(String carMake,String carModel,String vinNumber,String prodYear,String price) throws SQLException {
@@ -64,7 +52,6 @@ public class Connect {
             Statement myStmt = conn.createStatement();
             String query = "insert into samochod (samochod_id,marka,model,vin,rocznik,cena) values " + "(samochoddane.nextval,'"+carMake+"','"+carModel+"','"+vinNumber+"',"+prodYear+","+price+")";
             myStmt.executeQuery(query);
-
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -87,7 +74,6 @@ public class Connect {
             Statement myStmt = conn.createStatement();
             String query = "SELECT * FROM klient WHERE klient_id=" + clientID;
             myStmt.executeQuery(query);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
