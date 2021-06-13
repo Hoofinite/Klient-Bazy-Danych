@@ -20,17 +20,19 @@ public class Connect {
     }
 
     //connect
-    public void getDBConnection() throws SQLException{
+    public boolean getDBConnection() throws SQLException{
         try{
             OracleDataSource ds;
 
         ds = new OracleDataSource();
-        ds.setURL("jdbc:oracle:thin:@localhost:1521:ORCL");
+        ds.setURL(jdbcURL);
         conn = ds.getConnection(userid,password);
+        if (conn == )
         System.out.println("polaczono z baza danych!!!!!!!!!!");
-
+        return true;
         }catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
 
     }

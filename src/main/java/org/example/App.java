@@ -69,7 +69,7 @@ public class App extends Application implements EventHandler<ActionEvent> {
         VBox mainDeletee = new VBox(20);
         mainDeletee.setAlignment(Pos.CENTER);
 
-        new TableController();
+        TableController table = new TableController();
 
         view1 = new Scene(mainDeletee,800, 800);
 
