@@ -26,6 +26,13 @@ public class Connect {
 
     }
 
+    public boolean isClosedd() throws SQLException {
+        if(conn.isClosed()==false){
+            throw new IllegalArgumentException("baza nie zamknieta");
+        }
+        return true;
+    }
+
     public void insertClientsData(String secondName,String name,String pesel,String miejscowo, String street,String houseNumber) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
