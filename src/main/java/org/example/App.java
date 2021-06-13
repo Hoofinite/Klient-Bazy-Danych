@@ -74,7 +74,7 @@ public class App extends Application implements EventHandler<ActionEvent> {
 
         Button showButton = new Button("Wyświetl");
         Button backButton = new Button("Powrót");
-        backButton.setOnAction(e->changeScene(window,scene));
+        backButton.setOnAction(e->changeScene(window,mainView));
 
         TableController table = new TableController();
         showButton.setOnAction(e->{try {
@@ -97,7 +97,7 @@ public class App extends Application implements EventHandler<ActionEvent> {
 
         Button showButt = new Button("Wyświetl");
         Button backButt = new Button("Powrót");
-        backButton.setOnAction(e->changeScene(window,scene));
+        backButton.setOnAction(e->changeScene(window,mainView));
 
         showButt.setOnAction(e->{try {
             connect.selectWorkerTable(workerID2.getText());
@@ -118,7 +118,7 @@ public class App extends Application implements EventHandler<ActionEvent> {
 
         Button showClick = new Button("Wyświetl");
         Button backClick = new Button("Powrót");
-        backClick.setOnAction(e->changeScene(window,scene));
+        backClick.setOnAction(e->changeScene(window,mainView));
 
         showClick.setOnAction(e->{try {
             connect.selectCarTable(carID2.getText());
@@ -128,27 +128,6 @@ public class App extends Application implements EventHandler<ActionEvent> {
         } });
         showCar.getChildren().addAll(carID2,showClick,backClick);
         view3 = new Scene(showCar,800, 800);
-
-// wyswietlanie tabeli zamowienia
-
-        VBox showOrder = new VBox(20);
-        showOrder.setAlignment(Pos.CENTER);
-        Label txt3 = new Label("Dane jakiego zamówienia chcesz wyświetlić?");
-        TextField orderID2 = new TextField();
-        orderID2.setMaxWidth(100);
-
-        Button showCl = new Button("Wyświetl");
-        Button backCl = new Button("Powrót");
-        backCl.setOnAction(e->changeScene(window,scene));
-
-        showCl.setOnAction(e->{try {
-            connect.selectOrderTable(orderID2.getText());
-            AlertBox.display("Wyświetlanie danych pracownika","Wyświetlono");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } });
-        showOrder.getChildren().addAll(orderID2,showCl,backCl);
-        view4 = new Scene(showWorker,800, 800);
 
 
 
