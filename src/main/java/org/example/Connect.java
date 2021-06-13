@@ -2,6 +2,15 @@ package org.example;
 
 import oracle.jdbc.pool.OracleDataSource;
 import java.sql.*;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.util.Callback;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import oracle.jdbc.pool.OracleDataSource;
 
 /**
  * Klasa sluzaca do wysylania zapytan sql do bazy danych
@@ -262,19 +271,44 @@ public class Connect {
      * @param clientID id klienta
      * @throws SQLException wyjatek
      */
-    public void deleteClientData(String clientID) throws SQLException {
-
+    public void selectOrderTable (String orderID) throws SQLException {
+        ObservableList<ObservableList> data;
+        data = FXCollections.observableArrayList();
         try {
+            TableView tableview = new TableView();
             Statement myStmt = conn.createStatement();
-            Statement myStmtt = conn.createStatement();
-            String query = "delete from zamowienie where klient_id="+clientID;
-            String queryy = "delete from klient where klient_id="+clientID;
-            myStmt.executeQuery(query);
-            myStmtt.executeQuery(queryy);
-        }catch (SQLException e){
+            ResultSet results = myStmt.executeQuery("SELECT * FROM zamowienie WHERE zamowienie_id=" + orderID);
+//            while (results.next()) {
+//                int id = results.getInt("zamowienie_id");
+//                int id_klient = results.getInt("klient_id");
+//                int id_pracownik = results.getInt("pracownik_id");
+//                int id_samochod = results.getInt("samochod_id");
+//                String model = results.getString("model");
+//                String vin = results.getString("VIN");
+//                String rocznik = results.getString("rocznik");
+//                String cena = results.getString("cena");
+//            }
+            for (int i = 0; i < results.getMetaData().getColumnCount(); i++) {
+                final int j = i;
+                TableColumn col = new TableColumn(results.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+                tableview.getColumns().addAll(col);
+            }
+            while (results.next()) {
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= results.getMetaData().getColumnCount(); i++) {
+                    row.add(results.getString(i));
+                }
+                data.add(row);
+            }
+            tableview.setItems(data);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
