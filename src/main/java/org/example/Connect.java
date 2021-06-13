@@ -40,6 +40,11 @@ public class Connect {
 
     }
 
+    /**
+     * Metoda odpowiadajaca za to czy polaczenie z baza zostalo zamnkiete
+     * @return prawde jezeli tak, falsz jeseli baza nie zostala zamknieta
+     * @throws SQLException wyjatek
+     */
     public boolean isClosedd() throws SQLException {
         if(conn.isClosed()==false){
             throw new IllegalArgumentException("baza nie zamknieta");
