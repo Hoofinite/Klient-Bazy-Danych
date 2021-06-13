@@ -130,6 +130,27 @@ public class App extends Application implements EventHandler<ActionEvent> {
         view3 = new Scene(showCar,800, 800);
 
 
+// wyswietlanie tabeli zamowienia
+
+        VBox showOrder = new VBox(20);
+        showOrder.setAlignment(Pos.CENTER);
+        Label txt3 = new Label("Dane jakiego zamówienia chcesz wyświetlić?");
+        TextField orderID2 = new TextField();
+        orderID2.setMaxWidth(100);
+
+        Button showCl = new Button("Wyświetl");
+        Button backCl = new Button("Powrót");
+        backCl.setOnAction(e->changeScene(window,mainView));
+
+        showCl.setOnAction(e->{try {
+            TableView tableview = new TableView();
+            connect.selectOrderTable(orderID2.getText());
+            //AlertBox.display("Wyświetlanie danych pracownika","Wyświetlono");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        showOrder.getChildren().addAll(txt3,orderID2,showCl,backCl);
+        view4 = new Scene(showWorker,800, 800);
 
 
 
