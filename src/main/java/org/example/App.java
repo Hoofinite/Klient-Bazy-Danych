@@ -66,12 +66,89 @@ public class App extends Application implements EventHandler<ActionEvent> {
 
 // wyswietlanie tabeli klient
 
-        VBox mainDeletee = new VBox(20);
-        mainDeletee.setAlignment(Pos.CENTER);
+        VBox showClient = new VBox(20);
+        showClient.setAlignment(Pos.CENTER);
+        Label txt = new Label("Dane jakiego klienta chcesz wyświetlić?");
+        TextField clientID2 = new TextField();
+        clientID2.setMaxWidth(100);
+
+        Button showButton = new Button("Wyświetl");
+        Button backButton = new Button("Powrót");
+        backButton.setOnAction(e->changeScene(window,scene));
 
         TableController table = new TableController();
+        showButton.setOnAction(e->{try {
+            connect.selectClientTable(clientID2.getText());
+            AlertBox.display("Wyświetlanie danych klienta","Wyświetlono");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        showClient.getChildren().addAll(clientID2,showButton,backButton);
+        view1 = new Scene(showClient,800, 800);
 
-        view1 = new Scene(mainDeletee,800, 800);
+
+// wyswietlanie tabeli pracownikow
+
+        VBox showWorker = new VBox(20);
+        showWorker.setAlignment(Pos.CENTER);
+        Label txt1 = new Label("Dane jakiego pracownika chcesz wyświetlić?");
+        TextField workerID2 = new TextField();
+        workerID2.setMaxWidth(100);
+
+        Button showButt = new Button("Wyświetl");
+        Button backButt = new Button("Powrót");
+        backButton.setOnAction(e->changeScene(window,scene));
+
+        showButt.setOnAction(e->{try {
+            connect.selectWorkerTable(workerID2.getText());
+            AlertBox.display("Wyświetlanie danych pracownika","Wyświetlono");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        showWorker.getChildren().addAll(workerID2,showButt,backButt);
+        view2 = new Scene(showWorker,800, 800);
+
+// wyswietlanie tabeli samochod
+
+        VBox showCar = new VBox(20);
+        showCar.setAlignment(Pos.CENTER);
+        Label txt2 = new Label("Dane jakiego samochodu chcesz wyświetlić?");
+        TextField carID2 = new TextField();
+        carID2.setMaxWidth(100);
+
+        Button showClick = new Button("Wyświetl");
+        Button backClick = new Button("Powrót");
+        backClick.setOnAction(e->changeScene(window,scene));
+
+        showClick.setOnAction(e->{try {
+            connect.selectCarTable(carID2.getText());
+            AlertBox.display("Wyświetlanie danych samochodu","Wyświetlono");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        showCar.getChildren().addAll(carID2,showClick,backClick);
+        view3 = new Scene(showCar,800, 800);
+
+// wyswietlanie tabeli zamowienia
+
+        VBox showOrder = new VBox(20);
+        showOrder.setAlignment(Pos.CENTER);
+        Label txt3 = new Label("Dane jakiego zamówienia chcesz wyświetlić?");
+        TextField orderID2 = new TextField();
+        orderID2.setMaxWidth(100);
+
+        Button showCl = new Button("Wyświetl");
+        Button backCl = new Button("Powrót");
+        backCl.setOnAction(e->changeScene(window,scene));
+
+        showCl.setOnAction(e->{try {
+            connect.selectOrderTable(orderID2.getText());
+            AlertBox.display("Wyświetlanie danych pracownika","Wyświetlono");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } });
+        showOrder.getChildren().addAll(orderID2,showCl,backCl);
+        view4 = new Scene(showWorker,800, 800);
 
 
 
