@@ -139,11 +139,43 @@ public class Connect {
      * @param clientID id klienta
      * @throws SQLException wyjatek
      */
-    public void selectClientTable (String clientID) throws SQLException {
+   public void selectClientTable (String clientID) throws SQLException {
+        ObservableList<ObservableList> data;
+        data = FXCollections.observableArrayList();
         try {
             Statement myStmt = conn.createStatement();
-            String query = "SELECT * FROM klient WHERE klient_id=" + clientID;
-            myStmt.executeQuery(query);
+            TableView tableview = new TableView();
+            ResultSet results = myStmt.executeQuery("SELECT * FROM klient WHERE klient_id=" + clientID);
+//            while (results.next()) {
+//                int id = results.getInt("klient_id");
+//                String nazwisko = results.getString("nazwisko");
+//                String imie = results.getString("imie");
+//                String pesel = results.getString("PESEL");
+//                String miejscowosc = results.getString("miejscowosc");
+//                String ulica = results.getString("ulica");
+//                String nrDomu = results.getString("numer_domu");
+//            }
+
+            for (int i = 0; i < results.getMetaData().getColumnCount(); i++) {
+                final int j = i;
+                TableColumn col = new TableColumn(results.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+
+                tableview.getColumns().addAll(col);
+            }
+
+            while (results.next()) {
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= results.getMetaData().getColumnCount(); i++) {
+                    row.add(results.getString(i));
+                }
+                data.add(row);
+            }
+            tableview.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
