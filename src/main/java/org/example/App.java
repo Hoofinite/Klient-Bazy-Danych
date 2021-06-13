@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
 //modeltable
 /**
- * JavaFX App
+ * Klasa glowna aplikacji
  */
 public class App extends Application implements EventHandler<ActionEvent> {
     Stage window;
@@ -526,6 +526,14 @@ public class App extends Application implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
 
     }
+
+    /**
+     * Funkcja sluzaca do wyboru sceny
+     * @param choiceBox pole do wyboru
+     * @param window okienko/scena
+     * @param scena scena aplikacji
+     * @param scena2 scena aplikacji 2
+     */
     public void sceneChoice(ChoiceBox<String> choiceBox,Stage window,Scene scena,Scene scena2){
 
            if(choiceBox.getValue().equals("Klienta")) {
@@ -538,23 +546,39 @@ public class App extends Application implements EventHandler<ActionEvent> {
     }
 
 
-
-
-
+    /**
+     * Funkcja sluzaca do wyboru sceny
+     * @param window okienko
+     * @param scena scena aplikacji
+     */
     public void changeScene(Stage window,Scene scena){
         window.setScene(scena);
     }
+
+    /**
+     * Funkcja sluzaca do zamkniecia okienka
+     */
     public void close(){
        /* if (window.close()){
 
         }*/
 
     }
+
+    /**
+     * Funkcja sluzaca do wyboru
+     * @param choiceBox okno sluzace do wyboru textu
+     */
     public void getChoice(ChoiceBox<String> choiceBox){
         String answer = choiceBox.getValue();
         System.out.println(answer);
     }
 
+    /**
+     * Glowna metoda aplikacji
+     * @param args argumenty aplikacji
+     * @throws SQLException wyjatek
+     */
     public static void main(String[] args) throws SQLException {
         String jdbcURL = "jdbc:oracle:thin:@localhost:1521:ORCL";
         String userid = "humba";

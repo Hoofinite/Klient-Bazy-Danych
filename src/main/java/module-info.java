@@ -1,3 +1,6 @@
+/**
+ * Lista zawierajaca potrzebne komponenty do rozruchu aplikacji
+ */
 module org.example {
     requires javafx.controls;
     exports org.example;

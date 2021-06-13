@@ -3,15 +3,29 @@ package org.example;
 import oracle.jdbc.pool.OracleDataSource;
 import java.sql.*;
 
+/**
+ * Klasa sluzaca do wysylania zapytan sql do bazy danych
+ */
 public class Connect {
 
     Connection conn;
 
+    /**
+     * konstruktor klasy Connect
+     */
     public Connect() {
 
     }
 
     //connect
+
+    /**
+     * Sluzy do polaczenia z baza danych
+     * @param jdbcURL ustawia url jdbc
+     * @param userid id uzytkownika
+     * @param password haslo uzytkownika
+     * @throws SQLException wyjatek
+     */
     public void getDBConnection(String jdbcURL,String userid,String password) throws SQLException{
         try{
             OracleDataSource ds;
@@ -33,6 +47,16 @@ public class Connect {
         return true;
     }
 
+    /**
+     * Sluzy do wprowadzania danych do tabeli
+     * @param secondName nazwisko
+     * @param name imie
+     * @param pesel pesel
+     * @param miejscowo miejscowosc
+     * @param street ulica
+     * @param houseNumber numer domu
+     * @throws SQLException wyjatek
+     */
     public void insertClientsData(String secondName,String name,String pesel,String miejscowo, String street,String houseNumber) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -43,7 +67,15 @@ public class Connect {
         }
 
     }
-    
+
+    /**
+     * Sluzy do wprowadzania danych do tabeli
+     * @param secondName nazwisko
+     * @param name imie
+     * @param earnings zarobki
+     * @param position stanowisko
+     * @throws SQLException wyjatek
+     */
     public void insertWorkersData(String secondName,String name,String earnings,String position) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -54,6 +86,15 @@ public class Connect {
         }
     }
 
+    /**
+     * Sluzy do wprowadzania danych do tabeli
+     * @param carMake marka
+     * @param carModel model
+     * @param vinNumber numer vin
+     * @param prodYear rok produkcji
+     * @param price cena
+     * @throws SQLException wyjatek
+     */
     public void insertCarData(String carMake,String carModel,String vinNumber,String prodYear,String price) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -64,7 +105,19 @@ public class Connect {
         }
 
     }
-    
+
+    /**
+     * Sluzy do wprowadzenia danych do tabeli
+     * @param clientID id klienta
+     * @param workerID id pracownika
+     * @param carID id auta
+     * @param paymentMethod metoda platnosci
+     * @param yearOrder rok produkcji
+     * @param monthOrder miesiac prdukcji
+     * @param dayOrder dzien produkcji
+     * @param priceOrder cena
+     * @throws SQLException wyjatek
+     */
     public void insertOrderData(String clientID,String workerID,String carID,int paymentMethod,String yearOrder,String monthOrder,String dayOrder,String priceOrder) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -75,7 +128,12 @@ public class Connect {
         }
 
     }
-    
+
+    /**
+     * Sluzy do wyswietlania danych z tabeli
+     * @param clientID id klienta
+     * @throws SQLException wyjatek
+     */
     public void selectClientTable (String clientID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -86,6 +144,11 @@ public class Connect {
         }
     }
 
+    /**
+     * Sluzy do wyswietlania danych z tabeli
+     * @param workerID id pracownika
+     * @throws SQLException wyjatek
+     */
     public void selectWorkerTable (String workerID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -97,6 +160,11 @@ public class Connect {
         }
     }
 
+    /**
+     * Sluzy do wyswietlania danych z tabeli
+     * @param carID id samochodu
+     * @throws SQLException wyjatek
+     */
     public void selectCarTable (String carID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -108,6 +176,11 @@ public class Connect {
         }
     }
 
+    /**
+     * Sluzy do wyswietlania danych z tabeli
+     * @param orderID id zamowienia
+     * @throws SQLException wyjatek
+     */
     public void selectOrderTable (String orderID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -118,7 +191,12 @@ public class Connect {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Sluzy do usuniecia danych z tabeli
+     * @param clientID id klienta
+     * @throws SQLException wyjatek
+     */
     public void deleteClientData(String clientID) throws SQLException {
 
         try {
@@ -133,6 +211,12 @@ public class Connect {
         }
 
     }
+
+    /**
+     * Sluzy do usuniecia danych z tabeli
+     * @param workerID id pracownika
+     * @throws SQLException wyjatek
+     */
     public void deleteWorkerData(String workerID) throws SQLException {
 
         try {
@@ -147,7 +231,12 @@ public class Connect {
         }
 
     }
-    
+
+    /**
+     * Sluzy do usuniecia danych z tabeli
+     * @param carID id samochodu
+     * @throws SQLException wyjatek
+     */
     public void deleteCarData(String carID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -161,6 +250,12 @@ public class Connect {
         }
 
     }
+
+    /**
+     * Sluzy do usuniecia danych z tabeli
+     * @param orderID id zamowienia
+     * @throws SQLException wyjatek
+     */
     public void deleteOrderData(String orderID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
@@ -172,6 +267,10 @@ public class Connect {
 
     }
     //disconnect
+
+    /**
+     * Sluzy do rozwiazania polaczenia z baza
+     */
     public void disconnect(){
 
         try {
