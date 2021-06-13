@@ -195,7 +195,7 @@ public class Connect {
      * @param workerID id pracownika
      * @throws SQLException wyjatek
      */
-    public void selectWorkerTable (String workerID) throws SQLException {
+   /* public void selectWorkerTable (String workerID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
             String query = "SELECT * FROM pracownicy WHERE pracownik_id=" + workerID;
@@ -204,8 +204,43 @@ public class Connect {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+    public void selectWorkerTable (String workerID) throws SQLException {
+        ObservableList<ObservableList> data;
+        data = FXCollections.observableArrayList();
+        try {
+            Statement myStmt = conn.createStatement();
+            TableView tableview = new TableView();
+            ResultSet results = myStmt.executeQuery("SELECT * FROM pracownik WHERE pracownik_id=" + workerID);
+//            while (results.next()) {
+//                int id = results.getInt("pracownik_id");
+//                String nazwisko = results.getString("nazwisko");
+//                String imie = results.getString("imie");
+//                String zarobki = results.getString("zarobki");
+//                String stanowisko = results.getString("stanowisko");
+//            }
+            for (int i = 0; i < results.getMetaData().getColumnCount(); i++) {
+                final int j = i;
+                TableColumn col = new TableColumn(results.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+                tableview.getColumns().addAll(col);
+            }
+            while (results.next()) {
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= results.getMetaData().getColumnCount(); i++) {
+                    row.add(results.getString(i));
+                }
+                data.add(row);
+            }
+            tableview.setItems(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
     /**
      * Sluzy do wyswietlania danych z tabeli
      * @param carID id samochodu
@@ -255,7 +290,7 @@ public class Connect {
      * @param orderID id zamowienia
      * @throws SQLException wyjatek
      */
-    public void selectOrderTable (String orderID) throws SQLException {
+   /* public void selectOrderTable (String orderID) throws SQLException {
         try {
             Statement myStmt = conn.createStatement();
             String query = "SELECT * FROM zamowienie WHERE zamowienie_id=" + orderID;
@@ -264,7 +299,7 @@ public class Connect {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Sluzy do usuniecia danych z tabeli
