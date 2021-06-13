@@ -203,11 +203,39 @@ public class Connect {
      * @throws SQLException wyjatek
      */
     public void selectCarTable (String carID) throws SQLException {
+        ObservableList<ObservableList> data;
+        data = FXCollections.observableArrayList();
         try {
+            TableView tableview = new TableView();
             Statement myStmt = conn.createStatement();
-            String query = "SELECT * FROM samochod WHERE samochod_id=" + carID;
-            myStmt.executeQuery(query);
-
+            ResultSet results = myStmt.executeQuery("SELECT * FROM samochod WHERE samochod_id=" + carID);
+//            while (results.next()) {
+//                int id = results.getInt("samochod_id");
+//                String nazwisko = results.getString("nazwisko");
+//                String marka = results.getString("marka");
+//                String model = results.getString("model");
+//                String vin = results.getString("VIN");
+//                String rocznik = results.getString("rocznik");
+//                String cena = results.getString("cena");
+//            }
+            for (int i = 0; i < results.getMetaData().getColumnCount(); i++) {
+                final int j = i;
+                TableColumn col = new TableColumn(results.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+                tableview.getColumns().addAll(col);
+            }
+            while (results.next()) {
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= results.getMetaData().getColumnCount(); i++) {
+                    row.add(results.getString(i));
+                }
+                data.add(row);
+            }
+            tableview.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
