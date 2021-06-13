@@ -19,7 +19,7 @@ public class App extends Application implements EventHandler<ActionEvent> {
     Scene scene,scene1,scene2,scene3,sceneCar,sceneOrder;
     Scene mainDelete,delete1,delete2,delete3,delete4;
     Scene mainView,view1,view2,view3,view4;
-
+    //elo jestem podłączony
     static Connect connect = null;
 
 
